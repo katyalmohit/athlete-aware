@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "556558246182",
+    "project_id": "athlete-aware-76cc1",
+    "storage_bucket": "athlete-aware-76cc1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556558246182:android:2d288a1070dbbabc7ee1e7",
+        "android_client_info": {
+          "package_name": "com.example.athlete_aware"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556558246182-a14v4phafiiefo9kevv5mgp7ium2kb8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.athlete_aware",
+            "certificate_hash": "af38246c7ce82444d560a0f998d269da178da49a"
+          }
+        },
+        {
+          "client_id": "556558246182-oa7q3um16vlh8g1tu4cbic7gs3vjviam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.athlete_aware",
+            "certificate_hash": "7dfd1626827e4de2d5c96a384e867ec155673520"
+          }
+        },
+        {
+          "client_id": "556558246182-0cp1hckgkt6nhg35ndc2q4cuhgcbr782.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcmpjSDaNuq_nutpH8Axp8F1x6lzi8DrI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556558246182-0cp1hckgkt6nhg35ndc2q4cuhgcbr782.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "556558246182-d39nl919opn5hnpsdd12j0so9tdciubu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.athleteAware"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

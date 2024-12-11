@@ -1,7 +1,14 @@
 import 'package:athlete_aware/screens/media_screen.dart';
 import 'package:flutter/material.dart';
 
-class AntiDopingScreen extends StatelessWidget {
+class AntiDopingScreen extends StatefulWidget {
+  @override
+  _AntiDopingScreenState createState() => _AntiDopingScreenState();
+}
+
+class _AntiDopingScreenState extends State<AntiDopingScreen> {
+  bool _isHindi = false; // Track language toggle
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +16,20 @@ class AntiDopingScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        toolbarHeight: 0,
+        toolbarHeight: 60,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _isHindi = !_isHindi; // Toggle the language
+              });
+            },
+            icon: Icon(
+              _isHindi ? Icons.language : Icons.translate,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -17,9 +37,9 @@ class AntiDopingScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Greeting Header
-            const Text(
-              "Hello Shweta!",
-              style: TextStyle(
+            Text(
+              _isHindi ? "नमस्ते श्वेता!" : "Hello Shweta!",
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -70,9 +90,11 @@ class AntiDopingScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
-                            "Anti-Doping Video Series",
-                            style: TextStyle(
+                          Text(
+                            _isHindi
+                                ? "एंटी-डोपिंग वीडियो श्रृंखला"
+                                : "Anti-Doping Video Series",
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -80,16 +102,20 @@ class AntiDopingScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            "Learn the essentials of clean sport with our beginner-friendly video series.",
+                            _isHindi
+                                ? "हमारे शुरुआती-अनुकूल वीडियो श्रृंखला के साथ स्वच्छ खेल के अनिवार्यताएं जानें।"
+                                : "Learn the essentials of clean sport with our beginner-friendly video series.",
                             style: TextStyle(
-                                fontSize: 14, color: Colors.grey[700]),
+                              fontSize: 14,
+                              color: Colors.grey[700],
+                            ),
                           ),
                           const SizedBox(height: 8),
                           GestureDetector(
                             onTap: () {},
-                            child: const Text(
-                              "Explore",
-                              style: TextStyle(
+                            child: Text(
+                              _isHindi ? "अन्वेषण करें" : "Explore",
+                              style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
                                 decoration: TextDecoration.underline,
@@ -106,9 +132,9 @@ class AntiDopingScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Start Learning Section
-            const Text(
-              "Start Learning",
-              style: TextStyle(
+            Text(
+              _isHindi ? "शिक्षा शुरू करें" : "Start Learning",
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -117,20 +143,16 @@ class AntiDopingScreen extends StatelessWidget {
             const SizedBox(height: 8),
 
             // Modules List
-            _buildModuleCard(1, "Introduction to Anti-Doping"),
+            _buildModuleCard(1, _isHindi ? "परिचय एंटी-डोपिंग" : "Introduction to Anti-Doping"),
             const SizedBox(height: 8),
-            _buildModuleCard(2, "Introduction to Anti-Doping"),
-
-            const SizedBox(height: 16),
-
-            // New Button
+            _buildModuleCard(2, _isHindi ? "परिचय एंटी-डोपिंग" : "Introduction to Anti-Doping"),
 
             const SizedBox(height: 16),
 
             // Quiz Section
-            const Text(
-              "Quiz",
-              style: TextStyle(
+            Text(
+              _isHindi ? "प्रश्नोत्तरी" : "Quiz",
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -156,12 +178,19 @@ class AntiDopingScreen extends StatelessWidget {
                   Colors.yellow.shade200,
                   Colors.green.shade200,
                 ];
-                final titles = [
-                  "Anti-doping Awareness",
-                  "Rules and -doping Awareness",
-                  "Anti-doping Awareness",
-                  "Anti-doping Awareness",
-                ];
+                final titles = _isHindi
+                    ? [
+                        "एंटी-डोपिंग जागरूकता",
+                        "नियम और डोपिंग जागरूकता",
+                        "एंटी-डोपिंग जागरूकता",
+                        "एंटी-डोपिंग जागरूकता",
+                      ]
+                    : [
+                        "Anti-doping Awareness",
+                        "Rules and Awareness",
+                        "Anti-doping Awareness",
+                        "Anti-doping Awareness",
+                      ];
                 final numbers = ["01", "02", "03", "04"];
 
                 return Card(
@@ -213,8 +242,7 @@ class AntiDopingScreen extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors
-                                      .black, // Adjust text color for better contrast
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
@@ -233,8 +261,7 @@ class AntiDopingScreen extends StatelessWidget {
       //   type: BottomNavigationBarType.fixed,
       //   items: const [
       //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.wallpaper), label: "The Wall"),
+      //     BottomNavigationBarItem(icon: Icon(Icons.wallpaper), label: "The Wall"),
       //     BottomNavigationBarItem(icon: Icon(Icons.forum), label: "Forum"),
       //     BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
       //   ],
@@ -276,7 +303,7 @@ class AntiDopingScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Module:",
+              _isHindi ? "मॉड्यूल:" : "Module:",
               style: TextStyle(
                 fontSize: 16,
                 color: const Color.fromARGB(255, 52, 52, 52),
@@ -297,14 +324,14 @@ class AntiDopingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Level: Beginner",
+                  _isHindi ? "स्तर: प्रारंभिक" : "Level: Beginner",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[700],
                   ),
                 ),
                 Text(
-                  "Chapter: 01",
+                  _isHindi ? "अध्याय: 01" : "Chapter: 01",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[700],

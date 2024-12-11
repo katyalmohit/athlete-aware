@@ -1,6 +1,6 @@
 import 'package:athlete_aware/screens/home_screen.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -15,15 +15,31 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     'assets/carousel1.png',
     'assets/carousel2.png',
     'assets/carousel3.png',
-    // Add more image paths here
   ];
 
-  int _currentIndex = 0; // To track the current carousel index
+  bool _isHindi = false; // Track language toggle
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF121212), // Dark background color
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _isHindi = !_isHindi; // Toggle the language
+              });
+            },
+            icon: Icon(
+              _isHindi ? Icons.language : Icons.translate,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Stack(
           children: [
@@ -36,9 +52,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       image,
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      height: MediaQuery.of(context)
-                          .size
-                          .height, // Full screen height
+                      height: MediaQuery.of(context).size.height, // Full screen height
                     );
                   },
                 );
@@ -47,43 +61,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 autoPlay: true,
                 autoPlayInterval: const Duration(seconds: 2),
                 autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                height:
-                    MediaQuery.of(context).size.height, // Full screen height
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-                viewportFraction:
-                    1.0, // Ensures only one image is visible at a time
+                height: MediaQuery.of(context).size.height, // Full screen height
+                viewportFraction: 1.0, // Ensures only one image is visible at a time
               ),
             ),
-            // Carousel Dots in the middle of the image
-            // Positioned(
-            //   top: MediaQuery.of(context).size.height *
-            //       0.45, // Middle of the image vertically
-            //   left: 0,
-            //   right: 0,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: imageList.asMap().entries.map((entry) {
-            //       return GestureDetector(
-            //         onTap: () => {},
-            //         child: Container(
-            //           width: _currentIndex == entry.key ? 14.0 : 10.0,
-            //           height: _currentIndex == entry.key ? 14.0 : 10.0,
-            //           margin: const EdgeInsets.symmetric(horizontal: 4.0),
-            //           decoration: BoxDecoration(
-            //             shape: BoxShape.circle,
-            //             color: _currentIndex == entry.key
-            //                 ? Colors.white
-            //                 : Colors.grey,
-            //           ),
-            //         ),
-            //       );
-            //     }).toList(),
-            //   ),
-            // ),
             // Text and Button below the carousel image
             Positioned(
               bottom: 40, // Adjusted to ensure it's below the image
@@ -91,16 +72,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               right: 0,
               child: Column(
                 children: [
-                  // Text(
-                  //   'Empowering Athletes with\nAnti-Doping Knowledge',
-                  //   textAlign: TextAlign.center,
-                  //   style: GoogleFonts.zcoolXiaoWei(
-                  //     color: Colors.white,
-                  //     fontSize: 28,
-                  //     fontWeight: FontWeight.bold,
-                  //     fontStyle: FontStyle.italic,
-                  //   ),
-                  // ),
                   const SizedBox(height: 60),
                   Container(
                     width: double.infinity,
@@ -111,8 +82,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  AntiDopingScreen()), // Navigate to HomeScreen
+                            builder: (context) => AntiDopingScreen(), // Navigate to HomeScreen
+                          ),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -121,13 +92,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         padding: const EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 30.0),
+                          vertical: 15.0,
+                          horizontal: 30.0,
+                        ),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Get Started',
+                            _isHindi ? 'शुरू करें' : 'Get Started', // Change text based on toggle
                             style: GoogleFonts.aBeeZee(
                               color: const Color.fromARGB(255, 255, 255, 255),
                               fontSize: 18.0,
