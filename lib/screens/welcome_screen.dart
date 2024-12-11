@@ -12,8 +12,8 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final List<String> imageList = [
     'assets/carousel1.png',
-    'assets/carousel2.png',
-    'assets/carousel4.png',
+    'assets/carousel1.png',
+    'assets/carousel1.png',
     // Add more image paths here
   ];
 
@@ -90,16 +90,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               right: 0,
               child: Column(
                 children: [
-                  Text(
-                    'Empowering Athletes with\nAnti-Doping Knowledge',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.zcoolXiaoWei(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
+                  // Text(
+                  //   'Empowering Athletes with\nAnti-Doping Knowledge',
+                  //   textAlign: TextAlign.center,
+                  //   style: GoogleFonts.zcoolXiaoWei(
+                  //     color: Colors.white,
+                  //     fontSize: 28,
+                  //     fontWeight: FontWeight.bold,
+                  //     fontStyle: FontStyle.italic,
+                  //   ),
+                  // ),
                   const SizedBox(height: 60),
                   Container(
                     width: double.infinity,
@@ -115,7 +115,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.yellow,
+                        backgroundColor: const Color.fromARGB(255, 247, 96, 83),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
