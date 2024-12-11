@@ -143,9 +143,11 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
             const SizedBox(height: 8),
 
             // Modules List
-            _buildModuleCard(1, _isHindi ? "परिचय एंटी-डोपिंग" : "Introduction to Anti-Doping"),
+            _buildModuleCard(1,
+                _isHindi ? "परिचय एंटी-डोपिंग" : "Introduction to Anti-Doping"),
             const SizedBox(height: 8),
-            _buildModuleCard(2, _isHindi ? "परिचय एंटी-डोपिंग" : "Introduction to Anti-Doping"),
+            _buildModuleCard(2,
+                _isHindi ? "परिचय एंटी-डोपिंग" : "Introduction to Anti-Doping"),
 
             const SizedBox(height: 16),
 
@@ -257,36 +259,7 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
           ],
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   items: const [
-      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-      //     BottomNavigationBarItem(icon: Icon(Icons.wallpaper), label: "The Wall"),
-      //     BottomNavigationBarItem(icon: Icon(Icons.forum), label: "Forum"),
-      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-      //   ],
-      // ),
-      bottomNavigationBar: BottomNavigationBar(
-  type: BottomNavigationBarType.fixed,
-  items: [
-    const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.wallpaper), label: "Forum"),
-    BottomNavigationBarItem(
-      icon: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PostsSection()),
-          );
-        },
-        child: const Icon(Icons.forum),
-      ),
-      label: "The Wall",
-    ),
-    const BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-  ],
-),
+      
     );
   }
 
