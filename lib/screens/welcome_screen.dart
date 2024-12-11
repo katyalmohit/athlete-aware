@@ -1,3 +1,4 @@
+import 'package:athlete_aware/responsive/mobile_screen_layout.dart';
 import 'package:athlete_aware/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -82,7 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AntiDopingScreen(), // Navigate to HomeScreen
+                            builder: (context) => const MobileScreenLayout(initialPage: 0), // Navigate to HomeScreen
                           ),
                         );
                       },
