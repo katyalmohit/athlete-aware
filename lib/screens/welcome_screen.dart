@@ -11,9 +11,9 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final List<String> imageList = [
-    'assets/carousel1.jpg',
-    'assets/carousel2.jpg',
-    'assets/carousel4.jpg',
+    'assets/carousel1.png',
+    'assets/carousel2.png',
+    'assets/carousel4.png',
     // Add more image paths here
   ];
 
