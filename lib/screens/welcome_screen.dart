@@ -1,3 +1,4 @@
+import 'package:athlete_aware/screens/home_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -111,7 +112,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const WelcomeScreen()), // Navigate to HomeScreen
+                                  AntiDopingScreen()), // Navigate to HomeScreen
                         );
                       },
                       style: ElevatedButton.styleFrom(
