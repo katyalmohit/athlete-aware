@@ -244,7 +244,7 @@ class AntiDopingScreen extends StatelessWidget {
   items: [
     const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
     const BottomNavigationBarItem(
-        icon: Icon(Icons.wallpaper), label: "The Wall"),
+        icon: Icon(Icons.wallpaper), label: "Forum"),
     BottomNavigationBarItem(
       icon: GestureDetector(
         onTap: () {
@@ -255,7 +255,7 @@ class AntiDopingScreen extends StatelessWidget {
         },
         child: const Icon(Icons.forum),
       ),
-      label: "Forum",
+      label: "The Wall",
     ),
     const BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
   ],

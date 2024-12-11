@@ -13,8 +13,8 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final List<String> imageList = [
     'assets/carousel1.png',
-    'assets/carousel1.png',
-    'assets/carousel1.png',
+    'assets/carousel2.png',
+    'assets/carousel3.png',
     // Add more image paths here
   ];
 
@@ -59,31 +59,31 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
             // Carousel Dots in the middle of the image
-            Positioned(
-              top: MediaQuery.of(context).size.height *
-                  0.45, // Middle of the image vertically
-              left: 0,
-              right: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: imageList.asMap().entries.map((entry) {
-                  return GestureDetector(
-                    onTap: () => {},
-                    child: Container(
-                      width: _currentIndex == entry.key ? 14.0 : 10.0,
-                      height: _currentIndex == entry.key ? 14.0 : 10.0,
-                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentIndex == entry.key
-                            ? Colors.white
-                            : Colors.grey,
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
+            // Positioned(
+            //   top: MediaQuery.of(context).size.height *
+            //       0.45, // Middle of the image vertically
+            //   left: 0,
+            //   right: 0,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: imageList.asMap().entries.map((entry) {
+            //       return GestureDetector(
+            //         onTap: () => {},
+            //         child: Container(
+            //           width: _currentIndex == entry.key ? 14.0 : 10.0,
+            //           height: _currentIndex == entry.key ? 14.0 : 10.0,
+            //           margin: const EdgeInsets.symmetric(horizontal: 4.0),
+            //           decoration: BoxDecoration(
+            //             shape: BoxShape.circle,
+            //             color: _currentIndex == entry.key
+            //                 ? Colors.white
+            //                 : Colors.grey,
+            //           ),
+            //         ),
+            //       );
+            //     }).toList(),
+            //   ),
+            // ),
             // Text and Button below the carousel image
             Positioned(
               bottom: 40, // Adjusted to ensure it's below the image
@@ -105,7 +105,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Container(
                     width: double.infinity,
                     height: 60.0,
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 80.0),
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -129,14 +129,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           Text(
                             'Get Started',
                             style: GoogleFonts.aBeeZee(
-                              color: Colors.black,
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const Icon(
                             Icons.play_arrow,
-                            color: Colors.black,
+                            color: Color.fromARGB(255, 255, 255, 255),
                             size: 24.0,
                           ),
                         ],
