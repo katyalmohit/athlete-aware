@@ -76,6 +76,9 @@ flutter:
     - assets/carousel1.png
     - assets/carousel2.png
     - assets/carousel3.png
+    - assets/post1.jpeg
+    - assets/post2.jpeg
+    - assets/post3.jpeg
     # - assets/facebook-logo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see

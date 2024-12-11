@@ -10,9 +10,9 @@ import 'package:timeago/timeago.dart' as timeago;class PostsSection extends Stat
 class _PostsSectionState extends State<PostsSection> {
   // Local assets for images
   final List<String> images = [
-    "assets/post1.jpg",
-    "assets/post2.jpg",
-    "assets/post3.jpg",
+    "assets/post1.jpeg",
+    "assets/post2.jpeg",
+    "assets/post3.jpeg",
   ];
 
   // YouTube video links
