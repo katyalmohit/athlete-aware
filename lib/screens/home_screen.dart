@@ -1,4 +1,4 @@
-import 'package:athlete_aware/screens/media_screen.dart';
+import 'package:athlete_aware/screens/case_study_screen.dart';
 import 'package:flutter/material.dart';
 
 class AntiDopingScreen extends StatefulWidget {
@@ -144,15 +144,12 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
 
             // Modules List
             _buildModuleCard(1,
-                _isHindi ? "परिचय एंटी-डोपिंग" : "Introduction to Anti-Doping"),
+                _isHindi ? "एंटी-डोपिंग का परिचय" : "Introduction to Anti-Doping"),
             const SizedBox(height: 8),
             _buildModuleCard(2,
-                _isHindi ? "परिचय एंटी-डोपिंग" : "Introduction to Anti-Doping"),
+                _isHindi ? "एंटी-डोपिंग का परिचय" : "Introduction to Anti-Doping"),
 
             const SizedBox(height: 16),
-
-           NewAthleteCard(), // Adding the new card here
-
 
             // Quiz Section
             Text(
@@ -174,7 +171,7 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                 mainAxisSpacing: 16,
                 childAspectRatio: 1.2,
               ),
-              itemCount: 4, // Number of quiz cards
+              itemCount: 7, // Number of quiz cards
               itemBuilder: (context, index) {
                 // Data for each card
                 final colors = [
@@ -182,79 +179,100 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                   Colors.red.shade200,
                   Colors.yellow.shade200,
                   Colors.green.shade200,
+                  Colors.blue.shade200,
+                  Colors.pink.shade200,
+                  Colors.orange.shade200,
                 ];
                 final titles = _isHindi
                     ? [
                         "एंटी-डोपिंग जागरूकता",
-                        "नियम और डोपिंग जागरूकता",
-                        "एंटी-डोपिंग जागरूकता",
-                        "एंटी-डोपिंग जागरूकता",
+                        "प्रतिबंधित पदार्थ और तरीके",
+                        "परीक्षण और पहचान",
+                        "एथलीट की जिम्मेदारियां",
+                        "डोपिंग के परिणाम",
+                        "स्वच्छ खेल प्रचार",
+                        "अध्ययन मामला",
                       ]
                     : [
                         "Anti-doping Awareness",
-                        "Rules and Awareness",
-                        "Anti-doping Awareness",
-                        "Anti-doping Awareness",
+                        "Prohibited substances & Methods",
+                        "Testing & Detection",
+                        "Athlete Responsibilities",
+                        "Consequences of Doping",
+                        "Clean Sport Advocacy",
+                        "Case Study",
                       ];
-                final numbers = ["01", "02", "03", "04"];
+                final numbers = ["01", "02", "03", "04", "05", "06", "07"];
 
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 2,
-                  child: Column(
-                    children: [
-                      // Top Section (Colored Rectangle)
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: colors[index],
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
+                return GestureDetector(
+                  onTap: () {
+                    if (index == 6) {
+                      // Navigate to Case Study screen for the last card
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CaseStudyScreen(),
+                        ),
+                      );
+                    }
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 2,
+                    child: Column(
+                      children: [
+                        // Top Section (Colored Rectangle)
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: colors[index],
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                              ),
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  numbers[index],
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
+                        ),
+                        // Bottom Section (Content Area)
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            color: Colors.white, // Set the background color to white
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                numbers[index],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  titles[index],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      // Bottom Section (Content Area)
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          color:
-                              Colors.white, // Set the background color to white
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                titles[index],
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
@@ -323,59 +341,6 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-
-class NewAthleteCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity, // Ensures the card takes up the full width of the parent
-      child: Card(
-        color: Colors.white,
-        elevation: 2,
-        margin: const EdgeInsets.symmetric(horizontal: 2), // Matches margin of other cards
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-          child: Row(
-            children: [
-              // "New" Badge
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Color(0xFF6C8DFE), // Blue color for the badge
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Text(
-                  "New",
-                  style: TextStyle(
-                    color: Colors.white, // White text color for the badge
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12), // Spacing between badge and text
-              // Main Text
-              Expanded(
-                child: Text(
-                  "Learn more about {athlete}", // Replace {athlete} dynamically if needed
-                  style: TextStyle(
-                    color: Colors.black, // Black text color
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

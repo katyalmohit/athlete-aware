@@ -6,7 +6,9 @@ List<Widget> homeScreenItems = [
   AntiDopingScreen(), // Home Screen
   const Text("Media"),
   const Text("Forum"),
+  const Text("Tool"),
   const Text("Profile"),
+
    // Home Screen
     // Profile Screen
 ];

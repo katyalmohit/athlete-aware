@@ -77,12 +77,20 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
             label: 'Forum',
             backgroundColor: primaryColor,
           ),
+           BottomNavigationBarItem(
+            icon: Icon(
+              Icons.plumbing,
+              color: _page == 3 ? primaryColor : secondaryColor,
+            ),
+            label: 'Tools',
+            backgroundColor: primaryColor,
+          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
-              color: _page == 3 ? primaryColor : secondaryColor,
+              color: _page == 4 ? primaryColor : secondaryColor,
             ),
-            label: 'Profile',
+            label: 'Yuvasaathi',
             backgroundColor: primaryColor,
           ),
         ],
