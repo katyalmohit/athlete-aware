@@ -71,6 +71,8 @@ flutter:
     - assets/post1.jpeg
     - assets/post2.jpeg
     - assets/post3.jpeg
+    - assets/logo.png
+    - assets/logo2.png
     # - assets/facebook-logo.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -1,5 +1,7 @@
 import 'package:athlete_aware/screens/case_study_screen.dart';
 import 'package:athlete_aware/screens/mythVsFactsScreen.dart';
+import 'package:athlete_aware/screens/signin_screen.dart';
+import 'package:athlete_aware/screens/signup_screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +19,39 @@ class AntiDopingScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         toolbarHeight: 60,
         actions: [
+          // Profile Icon with Dropdown
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.account_circle, color: Colors.black),
+            onSelected: (value) {
+              if (value == 'Sign In') {
+                // Navigate to Sign In screen
+                 Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignInScreen(),
+                        ),
+                      );
+              } else if (value == 'Sign Up') {
+                // Navigate to Sign Up screen
+                 Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignUpScreen(),
+                        ),
+                      );
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: 'Sign In',
+                child: Text('Sign In'),
+              ),
+              const PopupMenuItem(
+                value: 'Sign Up',
+                child: Text('Sign Up'),
+              ),
+            ],
+          ),
           IconButton(
             onPressed: () {
               context.read<LanguageProvider>().toggleLanguage(); // Toggle language
