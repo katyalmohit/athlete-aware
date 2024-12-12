@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:athlete_aware/providers/language_provider.dart';
 
 class CaseStudyScreen extends StatefulWidget {
   @override
@@ -6,43 +8,73 @@ class CaseStudyScreen extends StatefulWidget {
 }
 
 class _CaseStudyScreenState extends State<CaseStudyScreen> {
-  final List<Map<String, String>> caseStudies = [
+  final List<Map<String, Map<String, String>>> caseStudies = [
     {
-      "title": "SUN YANG (2020)",
-      "summary":
-          "The most famous case of trimetazidine in sports doping involved Chinese swimmer Sun Yang...",
-      "details":
-          "The most famous case of trimetazidine in sports doping involved Chinese swimmer Sun Yang. Sun served a three-month ban in 2014 after testing positive for the stimulant. The ruling was not made public by China’s anti-doping agency until after the ban ended, a controversial decision.\n\nThen in 2018, the three-time Olympic champion refused to let anti-doping officials leave his home with a sample of his blood, reportedly ordering someone from his entourage to smash the casing of a blood vial with a hammer so that it would not be valid for testing. He was banned from competing at the Tokyo Olympics, ending his hopes of defending his Olympic title in the 200-meter freestyle."
+      "en": {
+        "title": "SUN YANG (2020)",
+        "summary":
+            "The most famous case of trimetazidine in sports doping involved Chinese swimmer Sun Yang...",
+        "details":
+            "The most famous case of trimetazidine in sports doping involved Chinese swimmer Sun Yang. Sun served a three-month ban in 2014 after testing positive for the stimulant. The ruling was not made public by China’s anti-doping agency until after the ban ended, a controversial decision.\n\nThen in 2018, the three-time Olympic champion refused to let anti-doping officials leave his home with a sample of his blood, reportedly ordering someone from his entourage to smash the casing of a blood vial with a hammer so that it would not be valid for testing. He was banned from competing at the Tokyo Olympics, ending his hopes of defending his Olympic title in the 200-meter freestyle.",
+        "pollQuestion": "Do you think Sun Yang's actions were justified?",
+        "pollOptions": "Yes,No,Not Sure"
+      },
+      "hi": {
+        "title": "सुन यांग (2020)",
+        "summary":
+            "स्पोर्ट्स डोपिंग में ट्राइमेटाजिडिन का सबसे प्रसिद्ध मामला चीनी तैराक सुन यांग से जुड़ा है...",
+        "details":
+            "स्पोर्ट्स डोपिंग में ट्राइमेटाजिडिन का सबसे प्रसिद्ध मामला चीनी तैराक सुन यांग से जुड़ा है। सुन ने 2014 में इस उत्तेजक पदार्थ के लिए सकारात्मक परीक्षण के बाद तीन महीने का प्रतिबंध झेला। यह निर्णय चीन की डोपिंग-रोधी एजेंसी द्वारा प्रतिबंध समाप्त होने के बाद सार्वजनिक किया गया, जो विवादास्पद था।\n\n2018 में, तीन बार के ओलंपिक चैंपियन ने डोपिंग अधिकारियों को अपने खून का सैंपल ले जाने से मना कर दिया, reportedly ordering someone from his entourage to smash the casing of a blood vial with a hammer so that it would not be valid for testing. उन्हें टोक्यो ओलंपिक में प्रतिस्पर्धा करने से प्रतिबंधित कर दिया गया था।",
+        "pollQuestion": "क्या आपको लगता है कि सुन यांग के कार्य उचित थे?",
+        "pollOptions": "हां,नहीं,पक्का नहीं"
+      },
     },
     {
-      "title": "NADEZHDA SERGEEVA (2018)",
-      "summary":
-          "The Russian bobsledder was disqualified from the 2018 Pyeongchang Olympics...",
-      "details":
-          "The Russian bobsledder was disqualified from the 2018 Pyeongchang Olympics after testing positive for the banned substance trimetazidine.\n\nAt the time, the head of Russia’s Federal Medical-Biological Agency, said his agency tried to bar Sergeeva from competing because of a heart condition, but Sports Ministry officials let her travel. Vladimir Uiba said “organizational fecklessness” led to Sergeeva’s mother, a doctor, giving her unapproved medicine containing trimetazidine.\n\nShe served an eight-month ban."
+      "en": {
+        "title": "MARION JONES (2000)",
+        "summary":
+            "Marion Jones won three gold medals and two bronzes at the Sydney Games...",
+        "details":
+            "One of the biggest American stars of the Sydney Games, Marion Jones won three gold medals and two bronzes. In 2007, she admitted lying to federal agents about her use of performance-enhancing drugs. She spent six months in jail and the IOC stripped her of all five medals.",
+        "pollQuestion":
+            "Should athletes lose all their medals for doping violations?",
+        "pollOptions": "Yes,No,Depends on the case"
+      },
+      "hi": {
+        "title": "मेरियन जोन्स (2000)",
+        "summary":
+            "सिडनी खेलों में मेरियन जोन्स ने तीन स्वर्ण और दो कांस्य पदक जीते...",
+        "details":
+            "सिडनी खेलों के सबसे बड़े अमेरिकी सितारों में से एक, मेरियन जोन्स ने तीन स्वर्ण और दो कांस्य पदक जीते। 2007 में, उन्होंने प्रदर्शन बढ़ाने वाले ड्रग्स के उपयोग के बारे में संघीय एजेंटों से झूठ बोलने की बात स्वीकार की। उन्होंने छह महीने जेल में बिताए और आईओसी ने उनके सभी पांच पदक छीन लिए।",
+        "pollQuestion": "क्या खिलाड़ियों को डोपिंग उल्लंघन के लिए सभी पदक गंवाने चाहिए?",
+        "pollOptions": "हां,नहीं,मामले पर निर्भर करता है"
+      },
     },
-    {
-      "title": "BEN JOHNSON (1988)",
-      "summary":
-          "Probably the most infamous drug scandal in Olympic history involved Canadian sprinter Ben Johnson...",
-      "details":
-          "Probably the most infamous drug scandal in Olympic history involved Canadian sprinter Ben Johnson, marring one of the signature events of the Summer Games — the 100-meter dash. Johnson appeared to have won the race at the Seoul Games in world record time, but he tested positive for an anabolic steroid and had his gold medal taken away. It went to American rival Carl Lewis instead.\n\nJuan Antonio Samaranch, the president of the International Olympic Committee at the time, said that penalties against Johnson and others were an indication that 'we have won the battle against doping.'"
-    },
-    // Add more case studies as needed
   ];
 
   @override
   Widget build(BuildContext context) {
+    final isHindi = context.watch<LanguageProvider>().isHindi;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Case Studies", style: const TextStyle(color: Colors.black)),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Colors.white,
+        title: Text(
+          isHindi ? "केस स्टडी" : "Case Studies",
+          style: const TextStyle(color: Colors.black),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        elevation: 0,
       ),
+      backgroundColor: Colors.white,
       body: ListView.builder(
         padding: const EdgeInsets.all(8.0),
         itemCount: caseStudies.length,
         itemBuilder: (context, index) {
-          final caseStudy = caseStudies[index];
+          final caseStudy = caseStudies[index][isHindi ? "hi" : "en"]!;
           return _buildCaseStudyCard(caseStudy, index);
         },
       ),
@@ -91,7 +123,12 @@ class _CaseStudyScreenState extends State<CaseStudyScreen> {
             // See More Button
             GestureDetector(
               onTap: () {
-                _showCaseStudyDetails(caseStudy["title"]!, caseStudy["details"]!);
+                _showCaseStudyDetails(
+                  caseStudy["title"]!,
+                  caseStudy["details"]!,
+                  caseStudy["pollQuestion"]!,
+                  caseStudy["pollOptions"]!.split(','),
+                );
               },
               child: const Text(
                 "See More",
@@ -108,26 +145,93 @@ class _CaseStudyScreenState extends State<CaseStudyScreen> {
     );
   }
 
-  void _showCaseStudyDetails(String title, String details) {
+  void _showCaseStudyDetails(
+      String title, String details, String pollQuestion, List<String> options) {
+    String? selectedOption;
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        content: SingleChildScrollView(
-          child: Text(
-            details,
-            style: const TextStyle(fontSize: 14),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Close"),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  details,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  pollQuestion,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Column(
+                  children: options
+                      .map(
+                        (option) => RadioListTile<String>(
+                          title: Text(option),
+                          value: option,
+                          groupValue: selectedOption,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedOption = value;
+                            });
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
           ),
-        ],
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(context.watch<LanguageProvider>().isHindi
+                  ? "बंद करें"
+                  : "Close"),
+            ),
+            TextButton(
+              onPressed: () {
+                if (selectedOption != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        context.watch<LanguageProvider>().isHindi
+                            ? "आपने चुना: $selectedOption"
+                            : "You selected: $selectedOption",
+                      ),
+                    ),
+                  );
+                  Navigator.of(context).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        context.watch<LanguageProvider>().isHindi
+                            ? "कृपया एक विकल्प चुनें।"
+                            : "Please select an option.",
+                      ),
+                    ),
+                  );
+                }
+              },
+              child: Text(context.watch<LanguageProvider>().isHindi
+                  ? "सबमिट करें"
+                  : "Submit"),
+            ),
+          ],
+        ),
       ),
     );
   }
