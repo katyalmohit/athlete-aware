@@ -31,7 +31,7 @@ class ChapterScreen extends StatelessWidget {
             color: Colors.green.shade100,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: const Text(
-              'Lorem Ipsum',
+              'Athlete Testing',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -42,15 +42,16 @@ class ChapterScreen extends StatelessWidget {
           Expanded(
             child: PageView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 12, // 11 chapters + 1 quiz card
+              itemCount: 3, // 11 chapters + 1 quiz card
               itemBuilder: (context, index) {
-                if (index < 11) {
+                if (index < 2) {
                   // Chapter Cards
                   return ChapterCard(
                     chapterNumber: index + 1,
-                    title: 'Need to invest',
+                    title: index == 0 ? '' : 'Introduction & Sample Collection',
+                    image: index == 0 ? 'assets/carousel3.jpg' : null,
                     description:
-                        'This chapter deals with the basic understanding of the need to invest. You will also learn about different investment options available.',
+                         'A few days later, a friendly stranger arrives in the village: Meera Ma’am, a Doping Control Officer (DCO). She’s here to talk to athletes about how tests are done. Karan meets her under the shade of a large banyan tree, where a small group has gathered.\n\nMeera Ma’am explains softly, “When you are selected for a test, you might be asked to give a urine or sometimes a blood sample. This isn’t to trouble you. It’s to ensure everyone follows the rules.”',
                     cardsRead: '11 / 11',
                     readTime: '11 mins',
                   );
@@ -70,6 +71,7 @@ class ChapterScreen extends StatelessWidget {
 class ChapterCard extends StatelessWidget {
   final int chapterNumber;
   final String title;
+  final String? image;
   final String description;
   final String cardsRead;
   final String readTime;
@@ -77,6 +79,7 @@ class ChapterCard extends StatelessWidget {
   const ChapterCard({
     required this.chapterNumber,
     required this.title,
+    this.image,
     required this.description,
     required this.cardsRead,
     required this.readTime,
@@ -96,23 +99,23 @@ class ChapterCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Chapter $chapterNumber',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+              if (image != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Image.asset(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+              if (title.isNotEmpty)
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
               const SizedBox(height: 8),
               Text(
                 description,

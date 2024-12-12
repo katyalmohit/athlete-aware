@@ -130,7 +130,7 @@ class _YuvasaathiScreenState extends State<YuvasaathiScreen> {
                               padding: EdgeInsets.only(left: 16, top: 4),
                               child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text("Typing...")),
+                                  child: Text("Typing...", style: TextStyle(color: Colors.white),)),
                             )
                           ],
                         )

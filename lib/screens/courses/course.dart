@@ -13,7 +13,7 @@ class _CourseScreenState extends State<CourseScreen> {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize:
-            const Size.fromHeight(220), // Total height for AppBar and green box
+            const Size.fromHeight(300), // Total height for AppBar and green box
         child: AppBar(
           automaticallyImplyLeading: false, // To fully customize the AppBar
           elevation: 0,
@@ -24,7 +24,6 @@ class _CourseScreenState extends State<CourseScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // Back Button
                 Row(
                   children: [
                     IconButton(
@@ -36,13 +35,11 @@ class _CourseScreenState extends State<CourseScreen> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                // Module and Header Details
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 28.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Module Text
                       Row(
                         children: [
                           const Text(
@@ -65,9 +62,8 @@ class _CourseScreenState extends State<CourseScreen> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      // First lorem Ipsum (bold, black)
                       const Text(
-                        "lorem Ipsum",
+                        "Athlete Testing",
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -76,9 +72,8 @@ class _CourseScreenState extends State<CourseScreen> {
                       ),
                       const SizedBox(height: 4),
                       const Divider(color: Colors.black),
-                      // Second lorem Ipsum (simple black)
                       const Text(
-                        "lorem Ipsum",
+                        "Meet Karan, a young athlete with national dreams. Join his journey to learn fair play and the anti-doping process, from sample collection to understanding his rights.",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
@@ -99,7 +94,6 @@ class _CourseScreenState extends State<CourseScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Remaining sections (e.g., chapters) will go below...
               MiddleSection(),
             ],
           ),
@@ -116,8 +110,16 @@ class MiddleSection extends StatefulWidget {
 
 class _MiddleSectionState extends State<MiddleSection> {
   bool isExpanded = true; // Default state is expanded
-  int selectedChapter =
-      -1; // Tracks the selected chapter for showing the explore button
+  int selectedChapter = -1; // Tracks the selected chapter for showing the explore button
+
+  final List<String> chapterNames = [
+    "Introduction & Sample Collection",
+    "In-Competition Testing",
+    "Out-of-Competition Testing",
+    "Athlete Rights & Responsibilities",
+    "Registered Testing Pool (RTP)",
+    "ADAMS & Whereabouts"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -134,13 +136,12 @@ class _MiddleSectionState extends State<MiddleSection> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Collapsible Section Header
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading:
                     const Icon(Icons.circle, size: 16, color: Colors.green),
                 title: const Text(
-                  "lorem Ipsum",
+                  "Chapters",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -162,7 +163,6 @@ class _MiddleSectionState extends State<MiddleSection> {
 
               if (isExpanded) ...[
                 const SizedBox(height: 16),
-                // Progress Section
                 const Row(
                   children: [
                     Text(
@@ -185,49 +185,36 @@ class _MiddleSectionState extends State<MiddleSection> {
                   ],
                 ),
                 const SizedBox(height: 12),
-                // Explore Button
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Explore button functionality
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue.shade100,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text(
-                      "Explore",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
+                // Center(
+                //   child: ElevatedButton(
+                //     onPressed: () {
+                //       // Explore button functionality
+                //     },
+                //     style: ElevatedButton.styleFrom(
+                //       backgroundColor: Colors.blue.shade100,
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(8),
+                //       ),
+                //     ),
+                //     child: const Text(
+                //       "Explore",
+                //       style: TextStyle(
+                //         color: Colors.blue,
+                //         fontSize: 14,
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 16),
                 const Divider(color: Colors.grey),
 
-                // Chapters Section
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
-                  child: Text(
-                    "Chapters:",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                ...List.generate(5, (index) {
+                ...List.generate(chapterNames.length, (index) {
                   return ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: RichText(
                       text: TextSpan(
-                        text: "0${index + 1} | ",
+                        text: "${index + 1}. ",
                         style: const TextStyle(
                           fontSize: 18, // Larger font size
                           fontWeight: FontWeight.bold,
@@ -235,12 +222,11 @@ class _MiddleSectionState extends State<MiddleSection> {
                         ),
                         children: [
                           TextSpan(
-                            text: "Chapter ${index + 1}",
+                            text: chapterNames[index],
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
-                              color:
-                                  Colors.grey, // Greyish color for chapter text
+                              color: Colors.grey, // Greyish color for chapter text
                             ),
                           ),
                         ],
@@ -248,15 +234,13 @@ class _MiddleSectionState extends State<MiddleSection> {
                     ),
                     onTap: () {
                       setState(() {
-                        selectedChapter =
-                            index; // Highlight the selected chapter
+                        selectedChapter = index; // Highlight the selected chapter
                       });
                     },
                     trailing: selectedChapter == index
                         ? ElevatedButton(
                             onPressed: () {
                               if (index == 0) {
-                                // Check if Chapter 1's Explore button is clicked
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -284,7 +268,6 @@ class _MiddleSectionState extends State<MiddleSection> {
                 }),
                 const SizedBox(height: 16),
 
-                // Certificate Section
                 const Divider(color: Colors.grey),
                 ListTile(
                   contentPadding: EdgeInsets.zero,

@@ -659,11 +659,11 @@ const SizedBox(height: 20),
                 const SizedBox(height: 15),
 
                 // Social Login Options
-                const Text(
-                  'Or Continue With',
-                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),fontSize: 16),
-                ),
-                const SizedBox(height: 10),
+                // const Text(
+                //   'Or Continue With',
+                //   style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),fontSize: 16),
+                // ),
+                // const SizedBox(height: 10),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

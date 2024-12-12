@@ -1,6 +1,5 @@
 import 'package:athlete_aware/screens/case_study_screen.dart';
 import 'package:athlete_aware/screens/courses/course.dart';
-import 'package:athlete_aware/screens/quizes/quiz_selection.dart';
 import 'package:athlete_aware/screens/mythVsFactsScreen.dart';
 import 'package:athlete_aware/screens/signin_screen.dart';
 import 'package:athlete_aware/screens/signup_screen.dart';
@@ -166,7 +165,7 @@ class AntiDopingScreen extends StatelessWidget {
 
             // Start Learning Section
             Text(
-              isHindi ? "शिक्षा शुरू करें" : "Start Learning",
+              isHindi ? "सीखना जारी रखें" : "Continue Learning",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -176,14 +175,6 @@ class AntiDopingScreen extends StatelessWidget {
             const SizedBox(height: 8),
 
             // Modules List
-            
-            _buildModuleCard(
-                1,
-                _isHindi
-                    ? "एंटी-डोपिंग का परिचय"
-                    : "Introduction to Anti-Doping"),
-            _buildModuleCard2(
-                2, _isHindi ? "एंटी-डोपिंग का परिचय" : "Test Your Knowledge"),
             _buildModuleCard(1, isHindi ? "एंटी-डोपिंग का परिचय" : "Introduction to Anti-Doping"),
             const SizedBox(height: 8),
             _buildModuleCard(2, isHindi ? "प्रतिबंधित पदार्थ और तरीके" : "Prohibited Substances & Methods"),
@@ -192,7 +183,7 @@ class AntiDopingScreen extends StatelessWidget {
 
             // Quiz Section
             Text(
-              isHindi ? "प्रश्नोत्तरी" : "Quiz",
+              isHindi ? "Modules" : "Modules",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -247,6 +238,14 @@ class AntiDopingScreen extends StatelessWidget {
 
                 return GestureDetector(
                   onTap: () {
+                     if (index == 0) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CourseScreen(),
+                        ),
+                      );
+                    }
                     if (index == 6) {
                       Navigator.push(
                         context,
@@ -255,20 +254,11 @@ class AntiDopingScreen extends StatelessWidget {
                         ),
                       );
                     }
-
-                    if (index == 5) {
-                      // Navigate to Case Study screen for the last card
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CourseScreen(),
-
                     if (index == 7) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => MythVsFactsScreen(),
-
                         ),
                       );
                     }
@@ -309,12 +299,7 @@ class AntiDopingScreen extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: Container(
-
-                            color: Colors
-                                .white, // Set the background color to white
-
                             color: Colors.white,
-
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Align(
@@ -347,141 +332,6 @@ class AntiDopingScreen extends StatelessWidget {
   }
 
   Widget _buildModuleCard(int moduleNumber, String title) {
-
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => QuizLevelScreen(),
-          ),
-        );
-      }, // Call the defined function on tap
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                _isHindi ? "मॉड्यूल:" : "Module:",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: const Color.fromARGB(255, 52, 52, 52),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                "$moduleNumber | $title",
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    _isHindi ? "स्तर: प्रारंभिक" : "Level: Beginner",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                  Text(
-                    _isHindi ? "अध्याय: 01" : "Chapter: 01",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Container(
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.greenAccent,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildModuleCard2(int moduleNumber, String title) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => QuizLevelScreen(),
-          ),
-        );
-      }, // Call the defined function on tap
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                _isHindi ? "मॉड्यूल:" : "Attempt Quiz:",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: const Color.fromARGB(255, 52, 52, 52),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                "$moduleNumber | $title",
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    _isHindi ? "स्तर: प्रारंभिक" : "Level: Beginner",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                 
-                ],
-              ),
-              const SizedBox(height: 8),
-              Container(
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.greenAccent,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ],
-          ),
     return Card(
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -511,4 +361,3 @@ class AntiDopingScreen extends StatelessWidget {
     );
   }
 }
-

@@ -322,13 +322,13 @@ Navigator.pushReplacement(
                 const SizedBox(height: 30),
 
                 // Social Login Section
-                const Text(
-                  'Or Continue With',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
-                ),
+                // const Text(
+                //   'Or Continue With',
+                //   style: TextStyle(
+                //     fontSize: 14,
+                //     color: Colors.black54,
+                //   ),
+                // ),
 
                 const SizedBox(height: 20),
 

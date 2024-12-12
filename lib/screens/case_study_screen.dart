@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:athlete_aware/providers/language_provider.dart';
@@ -38,7 +39,7 @@ class _CaseStudyScreenState extends State<CaseStudyScreen> {
             "One of the biggest American stars of the Sydney Games, Marion Jones won three gold medals and two bronzes. In 2007, she admitted lying to federal agents about her use of performance-enhancing drugs. She spent six months in jail and the IOC stripped her of all five medals.",
         "pollQuestion":
             "Should athletes lose all their medals for doping violations?",
-        "pollOptions": "Yes,No,Depends on the case"
+        "pollOptions": "Yes,No,No Idea"
       },
       "hi": {
         "title": "मेरियन जोन्स (2000)",
@@ -90,56 +91,53 @@ class _CaseStudyScreenState extends State<CaseStudyScreen> {
       Colors.pink.shade200,
       Colors.orange.shade200,
     ];
-    return Card(
-      color: colors[index % colors.length],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Title
-            Text(
-              caseStudy["title"]!,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+    return GestureDetector(
+      onTap: () {
+        _showCaseStudyDetails(
+          caseStudy["title"]!,
+          caseStudy["details"]!,
+          caseStudy["pollQuestion"]!,
+          caseStudy["pollOptions"]!.split(','),
+        );
+      },
+      child: Card(
+        color: colors[index % colors.length],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                caseStudy["title"]!,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            // Summary
-            Text(
-              caseStudy["summary"]!,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
+              const SizedBox(height: 8),
+              Text(
+                caseStudy["summary"]!,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.black87,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            // See More Button
-            GestureDetector(
-              onTap: () {
-                _showCaseStudyDetails(
-                  caseStudy["title"]!,
-                  caseStudy["details"]!,
-                  caseStudy["pollQuestion"]!,
-                  caseStudy["pollOptions"]!.split(','),
-                );
-              },
-              child: const Text(
-                "See More",
-                style: TextStyle(
+              const SizedBox(height: 8),
+              Text(
+                "Tap to see more",
+                style: const TextStyle(
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.underline,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -148,6 +146,9 @@ class _CaseStudyScreenState extends State<CaseStudyScreen> {
   void _showCaseStudyDetails(
       String title, String details, String pollQuestion, List<String> options) {
     String? selectedOption;
+    bool pollSubmitted = false;
+    List<int> percentages = _generateRandomPercentages(options.length);
+
     showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
@@ -174,65 +175,71 @@ class _CaseStudyScreenState extends State<CaseStudyScreen> {
                 ),
                 const SizedBox(height: 10),
                 Column(
-                  children: options
-                      .map(
-                        (option) => RadioListTile<String>(
-                          title: Text(option),
+                  children: options.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    String option = entry.value;
+
+                    return Column(
+                      children: [
+                        RadioListTile<String>(
+                          title: Row(
+                            children: [
+                              Text(option),
+                              if (pollSubmitted)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text(
+                                    "${percentages[index]}%",
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                            ],
+                          ),
                           value: option,
                           groupValue: selectedOption,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedOption = value;
-                            });
-                          },
+                          onChanged: pollSubmitted
+                              ? null
+                              : (value) {
+                                  setState(() {
+                                    selectedOption = value;
+                                    pollSubmitted = true;
+                                  });
+                                },
                         ),
-                      )
-                      .toList(),
+                        if (pollSubmitted)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: LinearProgressIndicator(
+                              value: percentages[index] / 100,
+                              backgroundColor: Colors.grey.shade300,
+                              color: Colors.blue,
+                            ),
+                          ),
+                      ],
+                    );
+                  }).toList(),
                 ),
               ],
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => Navigator.of(context).pop(),
               child: Text(context.watch<LanguageProvider>().isHindi
                   ? "बंद करें"
                   : "Close"),
-            ),
-            TextButton(
-              onPressed: () {
-                if (selectedOption != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        context.watch<LanguageProvider>().isHindi
-                            ? "आपने चुना: $selectedOption"
-                            : "You selected: $selectedOption",
-                      ),
-                    ),
-                  );
-                  Navigator.of(context).pop();
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        context.watch<LanguageProvider>().isHindi
-                            ? "कृपया एक विकल्प चुनें।"
-                            : "Please select an option.",
-                      ),
-                    ),
-                  );
-                }
-              },
-              child: Text(context.watch<LanguageProvider>().isHindi
-                  ? "सबमिट करें"
-                  : "Submit"),
             ),
           ],
         ),
       ),
     );
+  }
+
+  List<int> _generateRandomPercentages(int count) {
+    Random random = Random();
+    List<int> percentages = List.generate(count, (_) => random.nextInt(100));
+    int total = percentages.reduce((a, b) => a + b);
+    return percentages.map((p) => (p / total * 100).round()).toList();
   }
 }

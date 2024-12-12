@@ -65,7 +65,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
               size: 21,
               color: _page == 1 ? primaryColor : secondaryColor,
             ),
-            label: 'Media',
+            label: 'News',
             backgroundColor: primaryColor,
           ),
           BottomNavigationBarItem(
