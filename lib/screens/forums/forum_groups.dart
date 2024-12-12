@@ -1,147 +1,156 @@
-// import 'package:flutter/material.dart';
+import 'package:athlete_aware/screens/forums/forum_screen.dart';
+import 'package:flutter/material.dart';
 
-// class ForumGroups extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Communities'),
-//         backgroundColor: Colors.black,
-//         actions: [
-//           IconButton(
-//             icon: Icon(Icons.search),
-//             onPressed: () {
-//               // Add search functionality here
-//             },
-//           ),
-//         ],
-//       ),
-//       body: Container(
-//         color: Colors.black,
-//         padding: EdgeInsets.symmetric(horizontal: 8.0),
-//         child: ListView(
-//           children: [
-//             SizedBox(height: 10),
-//             _buildCategoriesRow(),
-//             SizedBox(height: 20),
-//             _buildSectionHeader('Recommended for you'),
-//             _buildCommunityList([
-//               {'name': 'r/C_Programming', 'members': '179k', 'posts': '96 weekly posts'},
-//               {'name': 'r/photocritique', 'members': '1.7m', 'posts': '374 weekly posts'},
-//               {'name': 'r/ElectronicsRepair', 'members': '30.6k', 'posts': '158 weekly posts'},
-//               {'name': 'r/homeautomation', 'members': '4.3m', 'posts': '162 weekly posts'},
-//             ]),
-//             SizedBox(height: 20),
-//             _buildSectionHeader('Similar to /esp32'),
-//             _buildCommunityList([
-//               {'name': 'r/WireGuard', 'members': '34.5k', 'posts': '59 weekly posts'},
-//               {'name': 'r/esp8266', 'members': '65.2k', 'posts': '14 weekly posts'},
-//               {'name': 'r/WLED', 'members': '41.8k', 'posts': '181 weekly posts'},
-//               {'name': 'r/FastLED', 'members': '18.2k', 'posts': '66 weekly posts'},
-//             ]),
-//             SizedBox(height: 20),
-//             _buildTrendingSection(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
+class ForumGroups extends StatefulWidget {
+  @override
+  _ForumGroupsState createState() => _ForumGroupsState();
+}
 
-//   Widget _buildCategoriesRow() {
-//     final categories = [
-//       {'name': 'Internet Culture', 'icon': Icons.public},
-//       {'name': 'Games', 'icon': Icons.games},
-//       {'name': 'Q&As & Stories', 'icon': Icons.question_answer},
-//       {'name': 'Technology', 'icon': Icons.computer},
-//       {'name': 'Movies & TV', 'icon': Icons.movie},
-//       {'name': 'Places & Travel', 'icon': Icons.map},
-//       {'name': 'Business & Finance', 'icon': Icons.business},
-//       {'name': 'Pop Culture', 'icon': Icons.stars},
-//       {'name': 'Education & Career', 'icon': Icons.school},
-//     ];
+class _ForumGroupsState extends State<ForumGroups> {
+  String selectedTab = 'All'; // Selected tab for filtering
+  String searchText = ''; // Search text entered by the user
 
-//     return Wrap(
-//       spacing: 10.0,
-//       runSpacing: 10.0,
-//       children: categories.map((category) {
-//         return Chip(
-//           backgroundColor: Colors.grey[800],
-//           label: Text(
-//             category['name']!,
-//             style: TextStyle(color: Colors.white),
-//           ),
-//           avatar: Icon(
-//             category['icon'] as IconData?,
-//             color: Colors.white,
-//             size: 18.0,
-//           ),
-//         );
-//       }).toList(),
-//     );
-//   }
+  final List<Map<String, String>> allCommunities = [
+    {'name': 'Drug Testing Awareness', 'members': '3k', 'category': 'WADA Policies'},
+    {'name': 'WADA Guidelines', 'members': '4k', 'category': 'Banned Substances'},
+    {'name': 'Ethical Sports', 'members': '2k', 'category': 'Fair Play'},
+    {'name': 'Sports Integrity', 'members': '8k', 'category': 'Clean Sports'},
+    {'name': 'Anti-Doping 101', 'members': '10k', 'category': 'Testing Procedures'},
+    {'name': 'Clean Sports Initiative', 'members': '5k', 'category': 'Sports Integrity'},
+    {'name': 'Doping-Free Athletes', 'members': '7k', 'category': 'Athlete Rights'},
+    {'name': 'Fair Play', 'members': '15k', 'category': 'Ethical Sports'},
+  ];
 
-//   Widget _buildSectionHeader(String title) {
-//     return Text(
-//       title,
-//       style: TextStyle(
-//         color: Colors.white,
-//         fontSize: 18,
-//         fontWeight: FontWeight.bold,
-//       ),
-//     );
-//   }
+  @override
+  Widget build(BuildContext context) {
+    // Filtered list based on selected tab and search text
+    final filteredCommunities = allCommunities.where((community) {
+      final matchesCategory = selectedTab == 'All' || community['category'] == selectedTab;
+      final matchesSearch = community['name']!.toLowerCase().contains(searchText.toLowerCase());
+      return matchesCategory && matchesSearch;
+    }).toList();
 
-//   Widget _buildCommunityList(List<Map<String, String>> communities) {
-//     return Column(
-//       children: communities.map((community) {
-//         return ListTile(
-//           leading: CircleAvatar(
-//             backgroundImage: AssetImage('assets/image.png'),
-//             backgroundColor: Colors.grey,
-//           ),
-//           title: Text(
-//             community['name']!,
-//             style: TextStyle(color: Colors.white),
-//           ),
-//           subtitle: Text(
-//             '${community['members']} members • ${community['posts']}',
-//             style: TextStyle(color: Colors.grey),
-//           ),
-//           trailing: ElevatedButton(
-//             onPressed: () {
-//               // Add join functionality here
-//             },
-//             style: ElevatedButton.styleFrom(
-//               foregroundColor: Colors.grey[800],
-//               backgroundColor: Colors.white,
-//             ),
-//             child: Text('Join'),
-//           ),
-//         );
-//       }).toList(),
-//     );
-//   }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Communities'),
+        backgroundColor: Colors.black,
+      ),
+      body: Container(
+        color: Colors.black,
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          children: [
+            _buildSearchBar(),
+            const SizedBox(height: 10),
+            _buildTabs(),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildCommunityList(filteredCommunities),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-//   Widget _buildTrendingSection() {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         _buildSectionHeader('Trending now in India'),
-//         ListTile(
-//           leading: CircleAvatar(
-//             backgroundImage: AssetImage('assets/image.png'),
-//             backgroundColor: Colors.grey,
-//           ),
-//           title: Text(
-//             'r/TrendingCommunity',
-//             style: TextStyle(color: Colors.white),
-//           ),
-//           subtitle: Text(
-//             'Trending posts and topics',
-//             style: TextStyle(color: Colors.grey),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
+  Widget _buildSearchBar() {
+    return TextField(
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        hintText: 'Search communities...',
+        hintStyle: const TextStyle(color: Colors.grey),
+        filled: true,
+        fillColor: Colors.grey[900],
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide.none,
+        ),
+        prefixIcon: const Icon(Icons.search, color: Colors.white),
+      ),
+      onChanged: (value) {
+        setState(() {
+          searchText = value;
+        });
+      },
+    );
+  }
+
+  Widget _buildTabs() {
+    final categories = ['All', 'WADA Policies', 'Banned Substances', 'Fair Play', 'Clean Sports'];
+
+    return Wrap(
+      spacing: 8.0,
+      runSpacing: 8.0,
+      children: categories.map((category) {
+        final isSelected = category == selectedTab;
+
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedTab = category;
+            });
+          },
+          child: Chip(
+            backgroundColor: isSelected ? Colors.blue : Colors.grey[800],
+            label: Text(
+              category,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildCommunityList(List<Map<String, String>> communities) {
+    return Column(
+      children: communities.map((community) {
+        return ListTile(
+          leading: const CircleAvatar(
+            backgroundImage: AssetImage('assets/icon.jpg'),
+            backgroundColor: Colors.grey,
+          ),
+          title: Text(
+            community['name']!,
+            style: const TextStyle(color: Colors.white),
+          ),
+          subtitle: Text(
+            '${community['members']} members',
+            style: const TextStyle(color: Colors.grey),
+          ),
+          trailing: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ForumScreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.grey[800],
+              backgroundColor: Colors.white,
+            ),
+            child: const Text('Join'),
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class WelcomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Welcome'),
+      ),
+      body: const Center(
+        child: Text('Welcome to the community!'),
+      ),
+    );
+  }
+}
