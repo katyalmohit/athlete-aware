@@ -1,18 +1,19 @@
 import 'package:athlete_aware/screens/case_study_screen.dart';
 import 'package:athlete_aware/screens/courses/course.dart';
 import 'package:athlete_aware/screens/quizes/quiz_selection.dart';
+import 'package:athlete_aware/screens/mythVsFactsScreen.dart';
+import 'package:athlete_aware/screens/signin_screen.dart';
+import 'package:athlete_aware/screens/signup_screen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:athlete_aware/providers/language_provider.dart';
 
-class AntiDopingScreen extends StatefulWidget {
-  @override
-  _AntiDopingScreenState createState() => _AntiDopingScreenState();
-}
-
-class _AntiDopingScreenState extends State<AntiDopingScreen> {
-  bool _isHindi = false; // Track language toggle
-
+class AntiDopingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isHindi = context.watch<LanguageProvider>().isHindi; // Global language state
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -20,14 +21,45 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
         backgroundColor: Colors.white,
         toolbarHeight: 60,
         actions: [
+          // Profile Icon with Dropdown
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.account_circle, color: Colors.black),
+            onSelected: (value) {
+              if (value == 'Sign In') {
+                // Navigate to Sign In screen
+                 Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignInScreen(),
+                        ),
+                      );
+              } else if (value == 'Sign Up') {
+                // Navigate to Sign Up screen
+                 Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignUpScreen(),
+                        ),
+                      );
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: 'Sign In',
+                child: Text('Sign In'),
+              ),
+              const PopupMenuItem(
+                value: 'Sign Up',
+                child: Text('Sign Up'),
+              ),
+            ],
+          ),
           IconButton(
             onPressed: () {
-              setState(() {
-                _isHindi = !_isHindi; // Toggle the language
-              });
+              context.read<LanguageProvider>().toggleLanguage(); // Toggle language
             },
             icon: Icon(
-              _isHindi ? Icons.language : Icons.translate,
+              isHindi ? Icons.language : Icons.translate,
               color: Colors.black,
             ),
           ),
@@ -40,7 +72,7 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
           children: [
             // Greeting Header
             Text(
-              _isHindi ? "नमस्ते श्वेता!" : "Hello Shweta!",
+              isHindi ? "नमस्ते श्वेता!" : "Hello Shweta!",
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -61,11 +93,11 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Image
+                    // Image Placeholder
                     Container(
                       width: 60,
                       height: 60,
-                      color: Colors.grey[300], // Placeholder for the image
+                      color: Colors.grey[300],
                     ),
                     const SizedBox(width: 12),
                     // Content
@@ -73,7 +105,6 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Introducing Label
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 12,
@@ -93,7 +124,7 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            _isHindi
+                            isHindi
                                 ? "एंटी-डोपिंग वीडियो श्रृंखला"
                                 : "Anti-Doping Video Series",
                             style: const TextStyle(
@@ -104,8 +135,8 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            _isHindi
-                                ? "हमारे शुरुआती-अनुकूल वीडियो श्रृंखला के साथ स्वच्छ खेल के अनिवार्यताएं जानें।"
+                            isHindi
+                                ? "हमारे शुरुआती-अनुकूल वीडियो श्रृंखला के साथ स्वच्छ खेल की अनिवार्यता जानें।"
                                 : "Learn the essentials of clean sport with our beginner-friendly video series.",
                             style: TextStyle(
                               fontSize: 14,
@@ -116,7 +147,7 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                           GestureDetector(
                             onTap: () {},
                             child: Text(
-                              _isHindi ? "अन्वेषण करें" : "Explore",
+                              isHindi ? "अन्वेषण करें" : "Explore",
                               style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
@@ -135,7 +166,7 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
 
             // Start Learning Section
             Text(
-              _isHindi ? "शिक्षा शुरू करें" : "Start Learning",
+              isHindi ? "शिक्षा शुरू करें" : "Start Learning",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -153,12 +184,15 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                     : "Introduction to Anti-Doping"),
             _buildModuleCard2(
                 2, _isHindi ? "एंटी-डोपिंग का परिचय" : "Test Your Knowledge"),
+            _buildModuleCard(1, isHindi ? "एंटी-डोपिंग का परिचय" : "Introduction to Anti-Doping"),
+            const SizedBox(height: 8),
+            _buildModuleCard(2, isHindi ? "प्रतिबंधित पदार्थ और तरीके" : "Prohibited Substances & Methods"),
 
             const SizedBox(height: 16),
 
             // Quiz Section
             Text(
-              _isHindi ? "प्रश्नोत्तरी" : "Quiz",
+              isHindi ? "प्रश्नोत्तरी" : "Quiz",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -171,24 +205,24 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 2 cards per row
+                crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
                 childAspectRatio: 1.2,
               ),
-              itemCount: 7, // Number of quiz cards
+              itemCount: 8,
               itemBuilder: (context, index) {
-                // Data for each card
                 final colors = [
                   Colors.green.shade200,
                   Colors.red.shade200,
                   Colors.yellow.shade200,
-                  Colors.green.shade200,
+                  const Color.fromARGB(255, 178, 130, 255),
                   Colors.blue.shade200,
                   Colors.pink.shade200,
                   Colors.orange.shade200,
+                  Colors.purple.shade200,
                 ];
-                final titles = _isHindi
+                final titles = isHindi
                     ? [
                         "एंटी-डोपिंग जागरूकता",
                         "प्रतिबंधित पदार्थ और तरीके",
@@ -197,22 +231,23 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                         "डोपिंग के परिणाम",
                         "स्वच्छ खेल प्रचार",
                         "अध्ययन मामला",
+                        "मिथक बनाम तथ्य",
                       ]
                     : [
                         "Anti-doping Awareness",
-                        "Prohibited substances & Methods",
+                        "Prohibited Substances & Methods",
                         "Testing & Detection",
                         "Athlete Responsibilities",
                         "Consequences of Doping",
                         "Clean Sport Advocacy",
                         "Case Study",
+                        "Myths vs Facts",
                       ];
-                final numbers = ["01", "02", "03", "04", "05", "06", "07"];
+                final numbers = ["01", "02", "03", "04", "05", "06", "07", "08"];
 
                 return GestureDetector(
                   onTap: () {
                     if (index == 6) {
-                      // Navigate to Case Study screen for the last card
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -220,12 +255,20 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                         ),
                       );
                     }
+
                     if (index == 5) {
                       // Navigate to Case Study screen for the last card
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CourseScreen(),
+
+                    if (index == 7) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MythVsFactsScreen(),
+
                         ),
                       );
                     }
@@ -237,7 +280,6 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                     elevation: 2,
                     child: Column(
                       children: [
-                        // Top Section (Colored Rectangle)
                         Expanded(
                           flex: 1,
                           child: Container(
@@ -264,23 +306,29 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
                             ),
                           ),
                         ),
-                        // Bottom Section (Content Area)
                         Expanded(
                           flex: 1,
                           child: Container(
+
                             color: Colors
                                 .white, // Set the background color to white
+
+                            color: Colors.white,
+
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Align(
                                 alignment: Alignment.topLeft,
-                                child: Text(
+                                child: AutoSizeText(
                                   titles[index],
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.black,
                                   ),
+                                  maxLines: 2,
+                                  minFontSize: 12,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ),
@@ -299,6 +347,7 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
   }
 
   Widget _buildModuleCard(int moduleNumber, String title) {
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -433,6 +482,30 @@ class _AntiDopingScreenState extends State<AntiDopingScreen> {
               ),
             ],
           ),
+    return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Module: $moduleNumber",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
         ),
       ),
     );

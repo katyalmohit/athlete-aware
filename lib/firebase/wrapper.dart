@@ -6,12 +6,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // For Firestore
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:athlete_aware/providers/language_provider.dart'; // Import LanguageProvider
 
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isHindi = context.watch<LanguageProvider>().isHindi; // Access language preference
+
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -38,7 +42,11 @@ class Wrapper extends StatelessWidget {
                 // Handle Firestore error
                 if (userSnapshot.hasError) {
                   return Center(
-                    child: Text('Error: ${userSnapshot.error}'),
+                    child: Text(
+                      isHindi
+                          ? 'त्रुटि: ${userSnapshot.error}'
+                          : 'Error: ${userSnapshot.error}',
+                    ),
                   );
                 }
 
@@ -64,9 +72,11 @@ class Wrapper extends StatelessWidget {
                                 size: 80,
                               ),
                               const SizedBox(height: 20),
-                              const Text(
-                                "You've been blocked.",
-                                style: TextStyle(
+                              Text(
+                                isHindi
+                                    ? "आपको ब्लॉक कर दिया गया है।"
+                                    : "You've been blocked.",
+                                style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
@@ -74,9 +84,11 @@ class Wrapper extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 10),
-                              const Text(
-                                "For any enquiries, please contact our customer support.",
-                                style: TextStyle(
+                              Text(
+                                isHindi
+                                    ? "कृपया हमारे ग्राहक सहायता से संपर्क करें।"
+                                    : "For any inquiries, please contact our customer support.",
+                                style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.black87,
                                 ),
@@ -89,8 +101,9 @@ class Wrapper extends StatelessWidget {
                                   Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const WelcomeScreen()), //signin screen
+                                      builder: (context) =>
+                                          const WelcomeScreen(),
+                                    ),
                                     (route) => false,
                                   );
                                 },
@@ -102,9 +115,9 @@ class Wrapper extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                                child: const Text(
-                                  'Go to Login',
-                                  style: TextStyle(
+                                child: Text(
+                                  isHindi ? 'लॉगिन पर जाएं' : 'Go to Login',
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     color: Colors.white,
                                   ),
@@ -135,7 +148,11 @@ class Wrapper extends StatelessWidget {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error: ${snapshot.error}'),
+              child: Text(
+                isHindi
+                    ? 'त्रुटि: ${snapshot.error}'
+                    : 'Error: ${snapshot.error}',
+              ),
             );
           }
         }
