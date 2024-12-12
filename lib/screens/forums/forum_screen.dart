@@ -97,6 +97,7 @@ class _ForumScreenState extends State<ForumScreen> {
                 // Input Field
                 Expanded(
                   child: TextField(
+                    style: const TextStyle(color: Colors.white),
                     controller: _controller,
                     maxLines: 1,
                     decoration: InputDecoration(
@@ -178,7 +179,7 @@ class _ForumScreenState extends State<ForumScreen> {
                   Text(
                     timeago.format(
                       DateTime.parse(
-                          time), // Ensure `time` is in ISO 8601 format
+                          time), // Ensure time is in ISO 8601 format
                       locale: 'en', // Default is English
                     ),
                     style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
@@ -187,11 +188,29 @@ class _ForumScreenState extends State<ForumScreen> {
               ),
               const Spacer(),
               IconButton(
-                onPressed: () {
-                  // Handle post options
-                },
-                icon: const Icon(Icons.more_vert, color: Colors.grey),
-              ),
+  onPressed: () {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.block, color: Colors.red),
+              title: const Text("Block Post", style: TextStyle(color: Colors.red)),
+              onTap: () {
+                Navigator.pop(context); // Close the modal
+                _handleBlock(postId); // Call the block handler
+              },
+            ),
+          ],
+        );
+      },
+    );
+  },
+  icon: const Icon(Icons.more_vert, color: Colors.grey),
+),
+
             ],
           ),
           const SizedBox(height: 6),
@@ -422,4 +441,23 @@ class _ForumScreenState extends State<ForumScreen> {
       });
     }
   }
+  
+void _handleBlock(String postId) async {
+  try {
+    final postRef = FirebaseFirestore.instance.collection('forum_posts').doc(postId);
+
+    // Increment the blocknumber field
+    await postRef.update({
+      'blocknumber': FieldValue.increment(1),
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Post has been blocked successfully.")),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error blocking the post: $e")),
+    );
+  }
+}
 }

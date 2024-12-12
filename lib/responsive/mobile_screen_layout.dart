@@ -65,7 +65,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
               size: 21,
               color: _page == 1 ? primaryColor : secondaryColor,
             ),
-            label: 'News',
+            label: 'Media',
             backgroundColor: primaryColor,
           ),
           BottomNavigationBarItem(
@@ -79,8 +79,8 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
            BottomNavigationBarItem(
             icon: Icon(
-              Icons.plumbing,
-              color: _page == 3 ? primaryColor : secondaryColor,
+              Icons.book,
+              color: _page == 3 ? primaryColor : secondaryColor, size: 22,
             ),
             label: 'Tools',
             backgroundColor: primaryColor,

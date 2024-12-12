@@ -33,13 +33,15 @@ class _ForumGroupsState extends State<ForumGroups> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Communities'),
-        backgroundColor: Colors.black,
+        backgroundColor: const Color.fromARGB(179, 0, 159, 244),
+        foregroundColor: Colors.white,
       ),
       body: Container(
         color: Colors.black,
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
+            const SizedBox(height:15),
             _buildSearchBar(),
             const SizedBox(height: 10),
             _buildTabs(),

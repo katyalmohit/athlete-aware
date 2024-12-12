@@ -1,17 +1,78 @@
+import 'package:athlete_aware/screens/athlete_responsibilities.dart';
 import 'package:athlete_aware/screens/case_study_screen.dart';
+import 'package:athlete_aware/screens/clean_sport_advocacy.dart';
 import 'package:athlete_aware/screens/courses/course.dart';
+import 'package:athlete_aware/screens/doping_consequences.dart';
 import 'package:athlete_aware/screens/mythVsFactsScreen.dart';
+import 'package:athlete_aware/screens/prohibited_screen.dart';
 import 'package:athlete_aware/screens/signin_screen.dart';
 import 'package:athlete_aware/screens/signup_screen.dart';
+import 'package:athlete_aware/screens/testing_detection_screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:athlete_aware/providers/language_provider.dart';
 
-class AntiDopingScreen extends StatelessWidget {
+class AntiDopingScreen extends StatefulWidget {
+  @override
+  _AntiDopingScreenState createState() => _AntiDopingScreenState();
+}
+
+class _AntiDopingScreenState extends State<AntiDopingScreen> {
+  final TextEditingController searchController = TextEditingController();
+  List<Map<String, String>> allSections = [];
+  List<Map<String, String>> filteredSections = [];
+
+  @override
+  void initState() {
+    super.initState();
+    initializeSections();
+  }
+
+  void initializeSections() {
+    final isHindi = context.read<LanguageProvider>().isHindi;
+    allSections = isHindi
+        ? [
+            {"title": "एंटी-डोपिंग जागरूकता", "number": "01"},
+            {"title": "प्रतिबंधित पदार्थ और तरीके", "number": "02"},
+            {"title": "परीक्षण और पहचान", "number": "03"},
+            {"title": "एथलीट की जिम्मेदारियां", "number": "04"},
+            {"title": "डोपिंग के परिणाम", "number": "05"},
+            {"title": "स्वच्छ खेल प्रचार", "number": "06"},
+            {"title": "अध्ययन मामला", "number": "07"},
+            {"title": "मिथक बनाम तथ्य", "number": "08"},
+          ]
+        : [
+            {"title": "Anti-Doping Awareness", "number": "01"},
+            {"title": "Prohibited Substances & Methods", "number": "02"},
+            {"title": "Testing & Detection", "number": "03"},
+            {"title": "Athlete Responsibilities", "number": "04"},
+            {"title": "Consequences of Doping", "number": "05"},
+            {"title": "Clean Sport Advocacy", "number": "06"},
+            {"title": "Case Study", "number": "07"},
+            {"title": "Myths vs Facts", "number": "08"},
+          ];
+    filteredSections = allSections;
+  }
+
+  void filterSections(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredSections = allSections;
+      } else {
+        filteredSections = allSections
+            .where((section) => section["title"]!
+                .toLowerCase()
+                .contains(query.toLowerCase()))
+            .toList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isHindi = context.watch<LanguageProvider>().isHindi; // Global language state
+    final isHindi = context.watch<LanguageProvider>().isHindi;
+    initializeSections();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -20,26 +81,23 @@ class AntiDopingScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         toolbarHeight: 60,
         actions: [
-          // Profile Icon with Dropdown
           PopupMenuButton<String>(
             icon: const Icon(Icons.account_circle, color: Colors.black),
             onSelected: (value) {
               if (value == 'Sign In') {
-                // Navigate to Sign In screen
-                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SignInScreen(),
-                        ),
-                      );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SignInScreen(),
+                  ),
+                );
               } else if (value == 'Sign Up') {
-                // Navigate to Sign Up screen
-                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SignUpScreen(),
-                        ),
-                      );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SignUpScreen(),
+                  ),
+                );
               }
             },
             itemBuilder: (BuildContext context) => [
@@ -55,7 +113,7 @@ class AntiDopingScreen extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              context.read<LanguageProvider>().toggleLanguage(); // Toggle language
+              context.read<LanguageProvider>().toggleLanguage();
             },
             icon: Icon(
               isHindi ? Icons.language : Icons.translate,
@@ -69,9 +127,28 @@ class AntiDopingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Greeting Header
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  hintText: isHindi ? "खोजें..." : "Search...",
+                  prefixIcon: const Icon(Icons.search),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                onChanged: (value) {
+                  filterSections(value);
+                },
+              ),
+            ),
+
             Text(
-              isHindi ? "नमस्ते श्वेता!" : "Hello Shweta!",
+              isHindi ? "नमस्ते उपभोक्ता!" : "Hello User!",
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -80,48 +157,31 @@ class AntiDopingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Introducing Card
             Card(
               color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
                 side: const BorderSide(color: Colors.blueAccent, width: 1),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Image Placeholder
-                    Container(
-                      width: 60,
-                      height: 60,
-                      color: Colors.grey[300],
+              child: Row(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: 120,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/online-course.png'),
+                        
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    const SizedBox(width: 12),
-                    // Content
-                    Expanded(
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.blue.shade100,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Text(
-                              "Introducing",
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
                           Text(
                             isHindi
                                 ? "एंटी-डोपिंग वीडियो श्रृंखला"
@@ -135,8 +195,8 @@ class AntiDopingScreen extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text(
                             isHindi
-                                ? "हमारे शुरुआती-अनुकूल वीडियो श्रृंखला के साथ स्वच्छ खेल की अनिवार्यता जानें।"
-                                : "Learn the essentials of clean sport with our beginner-friendly video series.",
+                                ? "स्वच्छ खेल की अनिवार्यता जानें।"
+                                : "Learn the essentials of clean sport.",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey[700],
@@ -157,31 +217,59 @@ class AntiDopingScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          isHindi ? "कोर्स ट्रैक करें" : "Track Courses",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const Icon(Icons.track_changes, color: Colors.green),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      isHindi
+                          ? "एंटी-डोपिंग जागरूकता - 75% पूरा"
+                          : "Anti-Doping Awareness - 75% Completed",
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(height: 8),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: LinearProgressIndicator(
+                        value: 0.75,
+                        backgroundColor: Colors.grey[300],
+                        color: Colors.green,
+                        minHeight: 10,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-
-            // Start Learning Section
-            Text(
-              isHindi ? "सीखना जारी रखें" : "Continue Learning",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            // Modules List
-            _buildModuleCard(1, isHindi ? "एंटी-डोपिंग का परिचय" : "Introduction to Anti-Doping"),
-            const SizedBox(height: 8),
-            _buildModuleCard(2, isHindi ? "प्रतिबंधित पदार्थ और तरीके" : "Prohibited Substances & Methods"),
 
             const SizedBox(height: 16),
 
-            // Quiz Section
             Text(
               isHindi ? "Modules" : "Modules",
               style: const TextStyle(
@@ -201,7 +289,7 @@ class AntiDopingScreen extends StatelessWidget {
                 mainAxisSpacing: 16,
                 childAspectRatio: 1.2,
               ),
-              itemCount: 8,
+              itemCount: filteredSections.length,
               itemBuilder: (context, index) {
                 final colors = [
                   Colors.green.shade200,
@@ -213,29 +301,7 @@ class AntiDopingScreen extends StatelessWidget {
                   Colors.orange.shade200,
                   Colors.purple.shade200,
                 ];
-                final titles = isHindi
-                    ? [
-                        "एंटी-डोपिंग जागरूकता",
-                        "प्रतिबंधित पदार्थ और तरीके",
-                        "परीक्षण और पहचान",
-                        "एथलीट की जिम्मेदारियां",
-                        "डोपिंग के परिणाम",
-                        "स्वच्छ खेल प्रचार",
-                        "अध्ययन मामला",
-                        "मिथक बनाम तथ्य",
-                      ]
-                    : [
-                        "Anti-doping Awareness",
-                        "Prohibited Substances & Methods",
-                        "Testing & Detection",
-                        "Athlete Responsibilities",
-                        "Consequences of Doping",
-                        "Clean Sport Advocacy",
-                        "Case Study",
-                        "Myths vs Facts",
-                      ];
-                final numbers = ["01", "02", "03", "04", "05", "06", "07", "08"];
-
+                final section = filteredSections[index];
                 return GestureDetector(
                   onTap: () {
                      if (index == 0) {
@@ -243,6 +309,46 @@ class AntiDopingScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => CourseScreen(),
+                        ),
+                      );
+                    }
+                    if (index == 1) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProhibitedScreen(),
+                        ),
+                      );
+                    }
+                    if (index == 2) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TestingDetectionScreen(),
+                        ),
+                      );
+                    }
+                    if (index == 3) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AthleteResponsibilitiesScreen(),
+                        ),
+                      );
+                    }
+                     if (index == 4) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DopingConsequencesScreen(),
+                        ),
+                      );
+                    }
+                    if (index == 5) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CleanSportAdvocacyScreen(),
                         ),
                       );
                     }
@@ -274,7 +380,7 @@ class AntiDopingScreen extends StatelessWidget {
                           flex: 1,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: colors[index],
+                              color: colors[index % colors.length],
                               borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(12),
                                 topRight: Radius.circular(12),
@@ -285,7 +391,7 @@ class AntiDopingScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  numbers[index],
+                                  section["number"]!,
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -305,7 +411,7 @@ class AntiDopingScreen extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.topLeft,
                                 child: AutoSizeText(
-                                  titles[index],
+                                  section["title"]!,
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -324,36 +430,6 @@ class AntiDopingScreen extends StatelessWidget {
                   ),
                 );
               },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildModuleCard(int moduleNumber, String title) {
-    return Card(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Module: $moduleNumber",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),

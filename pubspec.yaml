@@ -81,6 +81,8 @@ flutter:
     - assets/news.jpg
     - assets/carousel3.jpg
     - assets/frame1.png
+    - assets/online-course.png
+    - assets/chatbot.jpeg
     # - assets/facebook-logo.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

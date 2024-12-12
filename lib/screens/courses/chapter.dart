@@ -1,3 +1,4 @@
+import 'package:athlete_aware/screens/quizes/quiz_selection.dart';
 import 'package:flutter/material.dart';
 
 class ChapterScreen extends StatelessWidget {
@@ -208,7 +209,12 @@ class QuizCard extends StatelessWidget {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to the quiz screen
+                   Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const QuizLevelScreen(),
+                        ),
+                      );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue.shade100,

@@ -19,7 +19,8 @@ class _YuvasaathiScreenState extends State<YuvasaathiScreen> {
 
   void sendMsg() async {
     String text = controller.text;
-    String apiKey = "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"; // Replace with your OpenRouter API key
+    String apiKey =
+        "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"; // Replace with your OpenRouter API key
     controller.clear();
 
     try {
@@ -74,9 +75,7 @@ class _YuvasaathiScreenState extends State<YuvasaathiScreen> {
               0,
               Message(
                 false,
-                json["choices"][0]["message"]["content"]
-                    .toString()
-                    .trimLeft(),
+                json["choices"][0]["message"]["content"].toString().trimLeft(),
               ),
             );
           });
@@ -102,12 +101,53 @@ class _YuvasaathiScreenState extends State<YuvasaathiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("YuvaSathi Chat Bot"),
+        backgroundColor:
+            const Color.fromARGB(179, 0, 159, 244), // Custom AppBar color
+        
+        title: const Text(
+          "YuvaSathi Chat Bot",
+          style: TextStyle(color: Colors.white), // Title text style
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 16.0),
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage:
+                  AssetImage('assets/chatbot.jpeg'), // Chatbot image
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
-          const SizedBox(
-            height: 8,
+          const SizedBox(height: 8),
+          // Icon and Text Display
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                // Text(
+                //   '✨ Talk to YuvaSathi - your machine friend 🤖',
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //     fontSize: 22,
+                //     fontWeight: FontWeight.bold,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                // SizedBox(height: 4),
+                // Text(
+                //   'Explore anti-doping information in your preferred language',
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //     fontSize: 16,
+                //     color: Colors.grey,
+                //   ),
+                // ),
+              ],
+            ),
           ),
           Expanded(
             child: ListView.builder(
@@ -129,9 +169,15 @@ class _YuvasaathiScreenState extends State<YuvasaathiScreen> {
                             const Padding(
                               padding: EdgeInsets.only(left: 16, top: 4),
                               child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text("Typing...", style: TextStyle(color: Colors.white),)),
-                            )
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Typing...",
+                                  style: TextStyle(
+                                      color: Colors
+                                          .white), // Set text color to white
+                                ),
+                              ),
+                            ),
                           ],
                         )
                       : BubbleNormal(
@@ -149,7 +195,7 @@ class _YuvasaathiScreenState extends State<YuvasaathiScreen> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Container(
                     width: double.infinity,
                     height: 40,
@@ -157,7 +203,8 @@ class _YuvasaathiScreenState extends State<YuvasaathiScreen> {
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(10)),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       child: TextField(
                         controller: controller,
                         textCapitalization: TextCapitalization.sentences,
@@ -189,9 +236,7 @@ class _YuvasaathiScreenState extends State<YuvasaathiScreen> {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 8,
-              )
+              const SizedBox(width: 8),
             ],
           ),
         ],

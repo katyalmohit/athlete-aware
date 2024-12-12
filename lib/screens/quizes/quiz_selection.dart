@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:athlete_aware/responsive/mobile_screen_layout.dart';
 import 'package:athlete_aware/screens/quizes/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -133,7 +134,7 @@ class _QuizLevelScreenState extends State<QuizLevelScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Homepage(),
+                      builder: (context) => MobileScreenLayout(initialPage: 0,),
                     ),
                   );
                   // Handle start quiz functionality
